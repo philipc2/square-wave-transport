@@ -129,5 +129,10 @@ ani.save("density.gif", writer="pillow", fps=30, dpi=100)
 plt.close(fig)
 ```
 
+## Future Work
+- OpenMP optimizations
+- Compare the results between Lax, First Order Upwind and Flux-Corrected methods
+- Support different initial conditions
+
 
 
