@@ -1,9 +1,12 @@
 # Square Wave Transport
 
+
 A C-based simulation project for 1D advection of a square wave across a structured grid with three numerical transport schemes:
 - Lax-Fredrichs 
 - First Order Upwind 
 - Flux Corrected Transport
+
+![Animation](https://github.com/philipc2/square-wave-transport/blob/main/animations/density.gif)
 
 ## Requirements
 
