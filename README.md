@@ -84,5 +84,50 @@ You can then access the different methods' results:
 ds.density_flux_corrected.isel(time=0).plot()
 ```
 
+To generate an animation:
+
+```Python
+import xarray as xr
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+ds = xr.open_dataset("output.nc")
+
+da = ds.density_flux_corrected
+x  = ds.x.values
+t  = ds.time.values
+
+fig, ax = plt.subplots(figsize=(6,3))
+line, = ax.plot(x, da.isel(time=0), lw=2)
+ax.set_xlim(x.min(), x.max())
+ax.set_ylim(float(da.min()), float(da.max() + 5))
+ax.set_xlabel("x (meters)")
+ax.set_ylabel("Density")
+title = ax.set_title("t = 0.00 s")
+
+fig.tight_layout()
+
+# update function for each frame
+def update(frame):
+    y = da.isel(time=frame).values
+    line.set_ydata(y)
+    title.set_text(f"t = {t[frame]:.2f} s")
+    return line, title
+
+# build the animation
+ani = animation.FuncAnimation(
+    fig, update,
+    frames=da.sizes["time"],
+    blit=True,
+    interval=50,
+)
+
+# save gif
+ani.save("density.gif", writer="pillow", fps=30, dpi=100)
+
+plt.close(fig)
+```
+
 
 
