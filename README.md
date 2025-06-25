@@ -47,3 +47,39 @@ make
 ./square_transport -N 500 -x 0.5 -v 5.0 -T 8.0 -d 0.05  -o sim.nc
 ```
 
+## Data Output
+
+The simulation output is stored in a NetCDF file with the following structure:
+
+```text
+<xarray.Dataset>
+Dimensions:                 (x: 1000, time: 501)
+Coordinates:
+  * x        (x) float64 0.5 1.5 2.5 ... 997.5 998.5 999.5
+  * time     (time) float64 0.0 0.1 0.2 ... 49.8 49.9 50.0
+Data variables:
+    density_lax             (time, x) float64  ...
+    density_first_order     (time, x) float64  ...
+    density_flux_corrected  (time, x) float64  ...
+```
+
+## Analysis & Visualization
+
+We recommend using Python with Xarray for exploration and plotting. For example:
+
+```python
+import xarray as xr
+
+ds = xr.open_dataset("output.nc")
+print(ds)
+```
+
+You can then access the different methods' results:
+
+```python
+# Plot flux-corrected density at a given time index
+ds.density_flux_corrected.isel(time=0).plot()
+```
+
+
+
